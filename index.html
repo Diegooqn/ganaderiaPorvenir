@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Asociación Ganadería El Porvenir Santa Rosa — Producción de leche cruda y cría de ganado bovino en la Vereda El Cucubo, Santa Rosa de Viterbo, Boyacá." />
+  <title>Ganadería El Porvenir</title>
+  <style>
+    /* ── Variables ── */
+    :root {
+      --verde-oscuro:  #3D5A28;
+      --verde-medio:   #6B8E3D;
+      --verde-claro:   #A8C97F;
+      --verde-palido:  #E3EFD3;
+      --tierra:        #8B5E3C;
+      --tierra-clara:  #F0E4D3;
+      --crema:         #FAF7F0;
+      --blanco:        #FFFFFF;
+      --gris-texto:    #2C2C2C;
+      --gris-suave:    #6B7280;
+      --borde:         #DCE8C4;
+      --sombra:        0 2px 16px rgba(61,90,40,.12);
+      --radio:         12px;
+      --transicion:    0.25s ease;
+    }
+
+    /* ── Reset ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--blanco);
+      color: var(--gris-texto);
+      line-height: 1.65;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Utilidades ── */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+    .seccion-titulo {
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      font-weight: 700;
+      color: var(--verde-oscuro);
+      margin-bottom: .4rem;
+    }
+    .seccion-subtitulo {
+      color: var(--gris-suave);
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .chip {
+      display: inline-block;
+      background: var(--verde-palido);
+      color: var(--verde-oscuro);
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      padding: .25rem .75rem;
+      border-radius: 99px;
+      margin-bottom: .9rem;
+    }
+
+    /* ════════════════════════════
+       HEADER / NAV
+    ════════════════════════════ */
+    #header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--blanco);
+      border-bottom: 1px solid var(--borde);
+      box-shadow: 0 1px 8px rgba(61,90,40,.08);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 1rem;
+    }
+    .nav-marca {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-shrink: 0;
+    }
+    .nav-marca-texto {
+      display: block;
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--verde-oscuro);
+      line-height: 1.25;
+    }
+    @media (min-width: 480px) {
+      .nav-marca-texto { font-size: 1.05rem; }
+    }
+    .nav-links {
+      display: none;
+      list-style: none;
+      gap: .25rem;
+    }
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+    }
+    .nav-links a {
+      display: block;
+      padding: .45rem .85rem;
+      border-radius: 8px;
+      font-size: .92rem;
+      font-weight: 500;
+      color: var(--gris-texto);
+      transition: background var(--transicion), color var(--transicion);
+    }
+    .nav-links a:hover,
+    .nav-links a.activo {
+      background: var(--verde-palido);
+      color: var(--verde-oscuro);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      padding: 6px;
+      transition: background var(--transicion);
+    }
+    .hamburger:hover { background: var(--verde-palido); }
+    .hamburger span {
+      display: block;
+      height: 2px;
+      background: var(--verde-oscuro);
+      border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .hamburger.abierto span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.abierto span:nth-child(2) { opacity: 0; }
+    .hamburger.abierto span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    @media (min-width: 768px) { .hamburger { display: none; } }
+
+    /* Menú móvil */
+    #menu-movil {
+      display: none;
+      flex-direction: column;
+      background: var(--blanco);
+      border-top: 1px solid var(--borde);
+      padding: .75rem 1.25rem 1rem;
+      gap: .25rem;
+    }
+    #menu-movil.abierto { display: flex; }
+    #menu-movil a {
+      padding: .6rem .75rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--gris-texto);
+      transition: background var(--transicion);
+    }
+    #menu-movil a:hover { background: var(--verde-palido); color: var(--verde-oscuro); }
+
+    /* ════════════════════════════
+       HERO
+    ════════════════════════════ */
+    #inicio {
+      background: linear-gradient(160deg, var(--crema) 0%, #F0EAD8 55%, #E3EFD3 100%);
+      padding: 4rem 0 3rem;
+      overflow: hidden;
+    }
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    @media (min-width: 768px) {
+      .hero-inner {
+        flex-direction: row;
+        align-items: center;
+        gap: 3rem;
+      }
+      #inicio { padding: 5rem 0 4rem; }
+    }
+    .hero-texto { flex: 1; text-align: center; }
+    @media (min-width: 768px) { .hero-texto { text-align: left; } }
+    .hero-texto h1 {
+      font-size: clamp(1.75rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--verde-oscuro);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .hero-texto h1 em {
+      font-style: normal;
+      color: var(--tierra);
+    }
+    .hero-texto p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--gris-suave);
+      max-width: 480px;
+      margin: 0 auto 1.75rem;
+    }
+    @media (min-width: 768px) { .hero-texto p { margin: 0 0 1.75rem; } }
+    .hero-cta {
+      display: inline-flex;
+      gap: .75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    @media (min-width: 768px) { .hero-cta { justify-content: flex-start; } }
+    .btn-primario {
+      display: inline-block;
+      background: var(--verde-oscuro);
+      color: var(--blanco);
+      padding: .75rem 1.6rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: .95rem;
+      transition: background var(--transicion), transform .15s;
+    }
+    .btn-primario:hover { background: var(--verde-medio); transform: translateY(-1px); }
+    .btn-secundario {
+      display: inline-block;
+      background: transparent;
+      color: var(--verde-oscuro);
+      border: 2px solid var(--verde-oscuro);
+      padding: .7rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: .95rem;
+      transition: background var(--transicion), color var(--transicion);
+    }
+    .btn-secundario:hover { background: var(--verde-oscuro); color: var(--blanco); }
+
+    /* SVG ilustración */
+    .hero-ilustracion {
+      flex: 0 0 auto;
+      width: min(340px, 90vw);
+    }
+    .hero-ilustracion svg { width: 100%; height: auto; }
+
+    /* ════════════════════════════
+       QUIÉNES SOMOS
+    ════════════════════════════ */
+    #quienes {
+      padding: 4.5rem 0;
+      background: var(--blanco);
+    }
+    .quienes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+    @media (min-width: 640px) {
+      .quienes-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 900px) {
+      .quienes-grid { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    }
+    .quienes-card {
+      background: var(--crema);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      padding: 1.5rem;
+      transition: box-shadow var(--transicion), transform var(--transicion);
+    }
+    .quienes-card:hover {
+      box-shadow: var(--sombra);
+      transform: translateY(-3px);
+    }
+    .card-icono {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--verde-palido);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .card-icono svg { width: 26px; height: 26px; }
+    .quienes-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--verde-oscuro);
+      margin-bottom: .5rem;
+    }
+    .quienes-card p {
+      font-size: .9rem;
+      color: var(--gris-suave);
+      line-height: 1.55;
+    }
+
+    /* Bloque destacado */
+    .rte-bloque {
+      margin-top: 2.5rem;
+      background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+      border-radius: var(--radio);
+      padding: 1.75rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      color: var(--blanco);
+    }
+    @media (min-width: 640px) {
+      .rte-bloque { flex-direction: row; align-items: center; gap: 2rem; }
+    }
+    .rte-bloque svg { flex-shrink: 0; width: 40px; height: 40px; opacity: .9; }
+    .rte-bloque h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .3rem; }
+    .rte-bloque p { font-size: .9rem; opacity: .9; }
+
+    /* ════════════════════════════
+       PRODUCTOS
+    ════════════════════════════ */
+    #productos {
+      padding: 4.5rem 0;
+      background: var(--tierra-clara);
+    }
+    .productos-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 640px) {
+      .productos-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .producto-card {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      padding: 1.75rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      transition: box-shadow var(--transicion), transform var(--transicion);
+    }
+    .producto-card:hover { box-shadow: var(--sombra); transform: translateY(-3px); }
+    .producto-icono {
+      flex-shrink: 0;
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--tierra-clara);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .producto-icono svg { width: 30px; height: 30px; }
+    .producto-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--verde-oscuro);
+      margin-bottom: .4rem;
+    }
+    .producto-card p {
+      font-size: .9rem;
+      color: var(--gris-suave);
+    }
+
+    /* ════════════════════════════
+       DOCUMENTOS / TRAZABILIDAD
+    ════════════════════════════ */
+    #documentos {
+      padding: 4.5rem 0;
+      background: var(--crema);
+    }
+    .docs-vacio {
+      background: var(--blanco);
+      border: 2px dashed var(--borde);
+      border-radius: var(--radio);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .docs-vacio-icono {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--tierra-clara);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .docs-vacio-icono svg { width: 28px; height: 28px; }
+    .docs-vacio h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--verde-oscuro);
+      margin-bottom: .5rem;
+    }
+    .docs-vacio p {
+      font-size: .9rem;
+      color: var(--gris-suave);
+    }
+
+    /* ════════════════════════════
+       CONTACTO
+    ════════════════════════════ */
+    #contacto {
+      padding: 4.5rem 0 0;
+      background: var(--blanco);
+    }
+    .contacto-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    @media (min-width: 640px) {
+      .contacto-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .contacto-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .contacto-icono {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: var(--verde-palido);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contacto-icono svg { width: 22px; height: 22px; }
+    .contacto-item h4 {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--verde-medio);
+      margin-bottom: .2rem;
+    }
+    .contacto-item p, .contacto-item a {
+      font-size: .95rem;
+      color: var(--gris-texto);
+      line-height: 1.5;
+    }
+    .contacto-item a:hover { color: var(--verde-oscuro); text-decoration: underline; }
+
+    /* ════════════════════════════
+       FOOTER
+    ════════════════════════════ */
+    footer {
+      margin-top: 4rem;
+      background: var(--verde-oscuro);
+      color: rgba(255,255,255,.75);
+      padding: 2rem 0;
+    }
+    .footer-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+    .footer-marca {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+    }
+    .footer-marca span {
+      font-size: .85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,.9);
+      line-height: 1.3;
+      max-width: 170px;
+    }
+    .footer-info {
+      font-size: .8rem;
+      line-height: 1.7;
+    }
+    .footer-info strong { color: rgba(255,255,255,.9); }
+
+    /* ════════════════════════════
+       SCROLL SUAVE — anclas con offset
+    ════════════════════════════ */
+    :target { scroll-margin-top: 80px; }
+
+    /* ── Divider ── */
+    .divider {
+      height: 4px;
+      border: none;
+      background: linear-gradient(90deg, var(--verde-claro), var(--verde-oscuro), var(--tierra));
+      opacity: .3;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header id="header">
+  <div class="container">
+    <nav class="nav-inner">
+      <a href="#inicio" class="nav-marca" aria-label="Inicio">
+        <span class="nav-marca-texto">Ganadería El Porvenir</span>
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#quienes">Quiénes somos</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#documentos">Documentos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+  <div id="menu-movil" role="navigation" aria-label="Menú móvil">
+    <a href="#inicio" class="nav-link-movil">Inicio</a>
+    <a href="#quienes" class="nav-link-movil">Quiénes somos</a>
+    <a href="#productos" class="nav-link-movil">Productos</a>
+    <a href="#documentos" class="nav-link-movil">Documentos</a>
+    <a href="#contacto" class="nav-link-movil">Contacto</a>
+  </div>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section id="inicio">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-texto">
+        <div class="chip">Santa Rosa de Viterbo, Boyacá</div>
+        <h1>Leche fresca y ganado de calidad desde el <em>corazón de Boyacá</em></h1>
+        <p>Somos una asociación campesina de la Vereda El Cucubo dedicada a la producción de leche cruda de alta calidad y la cría de ganado bovino, fortaleciendo a los pequeños productores de nuestra región.</p>
+        <div class="hero-cta">
+          <a href="#quienes" class="btn-primario">Conócenos</a>
+          <a href="#productos" class="btn-secundario">Nuestros productos</a>
+        </div>
+      </div>
+
+      <!-- Ilustración SVG original: paisaje de potrero -->
+      <div class="hero-ilustracion" aria-hidden="true">
+        <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Colinas y potreros de Boyacá">
+          <!-- Sol -->
+          <circle cx="235" cy="70" r="34" fill="#E8C468" opacity=".55"/>
+          <circle cx="235" cy="70" r="20" fill="#E8C468" opacity=".8"/>
+          <!-- Colinas de fondo -->
+          <path d="M0 165 Q80 110 160 155 T320 150 V300 H0 Z" fill="#A8C97F" opacity=".6"/>
+          <!-- Colina media -->
+          <path d="M0 205 Q100 155 200 195 T320 190 V300 H0 Z" fill="#6B8E3D"/>
+          <!-- Potrero frontal -->
+          <path d="M0 240 Q110 205 220 235 T320 230 V300 H0 Z" fill="#3D5A28"/>
+          <!-- Camino de tierra -->
+          <path d="M120 300 Q150 220 190 165" stroke="#8B5E3C" stroke-width="16" stroke-linecap="round" fill="none" opacity=".5"/>
+          <!-- Cerca -->
+          <g stroke="#8B5E3C" stroke-width="5" stroke-linecap="round">
+            <line x1="40" y1="235" x2="40" y2="278"/>
+            <line x1="95" y1="222" x2="95" y2="268"/>
+            <line x1="40" y1="246" x2="95" y2="235"/>
+            <line x1="40" y1="266" x2="95" y2="256"/>
+          </g>
+          <!-- Árboles simples -->
+          <g>
+            <circle cx="255" cy="175" r="22" fill="#6B8E3D"/>
+            <rect x="251" y="190" width="8" height="18" rx="3" fill="#8B5E3C"/>
+          </g>
+          <g>
+            <circle cx="280" cy="195" r="16" fill="#5A7A32"/>
+            <rect x="277" y="206" width="6" height="14" rx="3" fill="#8B5E3C"/>
+          </g>
+          <!-- Nubes -->
+          <g fill="#FFFFFF" opacity=".8">
+            <ellipse cx="70" cy="55" rx="26" ry="12"/>
+            <ellipse cx="92" cy="50" rx="18" ry="10"/>
+            <ellipse cx="52" cy="52" rx="16" ry="9"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ QUIÉNES SOMOS ═══ -->
+<section id="quienes">
+  <div class="container">
+    <div class="chip">Quiénes somos</div>
+    <h2 class="seccion-titulo">Qué hacemos</h2>
+    <p class="seccion-subtitulo">Trabajamos la tierra y el campo boyacense, garantizando una fuente estable y confiable de leche de calidad.</p>
+
+    <div class="quienes-grid">
+      <!-- Tarjeta 1 -->
+      <div class="quienes-card">
+        <div class="card-icono">
+          <!-- Gota de leche -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C12 2 6 11 6 15.5C6 19.09 8.69 22 12 22C15.31 22 18 19.09 18 15.5C18 11 12 2 12 2Z" stroke="#3D5A28" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 15.5c0 1.66 1.34 3 3 3" stroke="#3D5A28" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Producción láctea de calidad</h3>
+        <p>Ordeñamos y entregamos leche cruda fresca cumpliendo estrictos estándares de higiene, calidad nutricional y trazabilidad.</p>
+      </div>
+
+      <!-- Tarjeta 2 -->
+      <div class="quienes-card">
+        <div class="card-icono">
+          <!-- Vaca / cría -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="12" cy="14" rx="8" ry="6" stroke="#3D5A28" stroke-width="2"/>
+            <circle cx="9" cy="13" r="1" fill="#3D5A28"/>
+            <circle cx="15" cy="13" r="1" fill="#3D5A28"/>
+            <path d="M9 17c.9.7 1.9 1 3 1s2.1-.3 3-1" stroke="#3D5A28" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M6 9c0-2 1.5-3.5 3-4M18 9c0-2-1.5-3.5-3-4" stroke="#3D5A28" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Cría de ganado bovino</h3>
+        <p>Criamos ganado bovino cuidando la salud, la genética y el bienestar animal en cada etapa del proceso.</p>
+      </div>
+
+      <!-- Tarjeta 3 -->
+      <div class="quienes-card">
+        <div class="card-icono">
+          <!-- Casa / tradición campesina -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 11l9-7 9 7" stroke="#3D5A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 10v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9" stroke="#3D5A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 20v-6h4v6" stroke="#3D5A28" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Tradición familiar campesina</h3>
+        <p>Somos una asociación familiar arraigada en la Vereda El Cucubo, con dedicación y experiencia trabajando el campo boyacense.</p>
+      </div>
+
+      <!-- Tarjeta 4 -->
+      <div class="quienes-card">
+        <div class="card-icono">
+          <!-- Manos / comunidad -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="3" stroke="#3D5A28" stroke-width="2"/>
+            <circle cx="17" cy="8" r="3" stroke="#3D5A28" stroke-width="2"/>
+            <path d="M2 21v-1a5 5 0 0 1 5-5h1a5 5 0 0 1 4 2" stroke="#3D5A28" stroke-width="2" stroke-linecap="round"/>
+            <path d="M13 17a5 5 0 0 1 4-2h1a5 5 0 0 1 4 5v1" stroke="#3D5A28" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Apoyo a productores locales</h3>
+        <p>Fortalecemos e integramos a pequeños productores de la región en la cadena de suministro de leche.</p>
+      </div>
+    </div>
+
+    <!-- Bloque destacado -->
+    <div class="rte-bloque">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="3" stroke="white" stroke-width="2"/>
+        <path d="M7 12l3 3 7-7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div>
+        <h3>Asociación formalmente constituida</h3>
+        <p>Registrados ante la Cámara de Comercio de Duitama, con el respaldo del Fondo Emprender del SENA, comprometidos con las buenas prácticas ganaderas y la trazabilidad de nuestros productos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ PRODUCTOS ═══ -->
+<section id="productos">
+  <div class="container">
+    <div class="chip">Nuestros productos</div>
+    <h2 class="seccion-titulo">Lo que ofrecemos</h2>
+    <p class="seccion-subtitulo">Producción primaria pecuaria, del potrero directo a nuestros clientes.</p>
+
+    <div class="productos-grid">
+      <div class="producto-card">
+        <div class="producto-icono">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2C12 2 6 11 6 15.5C6 19.09 8.69 22 12 22C15.31 22 18 19.09 18 15.5C18 11 12 2 12 2Z" stroke="#8B5E3C" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Leche cruda fresca</h3>
+          <p>Leche de vaca de alta calidad, ordeñada a diario, cumpliendo requisitos de higiene y trazabilidad para el consumo y la transformación láctea.</p>
+        </div>
+      </div>
+
+      <div class="producto-card">
+        <div class="producto-icono">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="12" cy="14" rx="8" ry="6" stroke="#8B5E3C" stroke-width="2"/>
+            <path d="M6 9c0-2 1.5-3.5 3-4M18 9c0-2-1.5-3.5-3-4" stroke="#8B5E3C" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Terneras y ganado de levante</h3>
+          <p>Crías y ganado bovino levantados con buenas prácticas de manejo animal, sanidad y bienestar en nuestros potreros.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ DOCUMENTOS / TRAZABILIDAD ═══ -->
+<section id="documentos">
+  <div class="container">
+    <div class="chip">Formalización</div>
+    <h2 class="seccion-titulo">Documentos y trazabilidad</h2>
+    <p class="seccion-subtitulo">Información de formalización y trazabilidad de la asociación.</p>
+
+    <!-- Estado pendiente: aún no hay documentos para publicar -->
+    <div class="docs-vacio">
+      <div class="docs-vacio-icono">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8L14 2z" stroke="#8B5E3C" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M14 2v6h6" stroke="#8B5E3C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 13h6M9 17h4" stroke="#8B5E3C" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>No disponible aún</h3>
+      <p>Estamos organizando los documentos oficiales de la asociación. Muy pronto estarán disponibles en esta sección.</p>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══ CONTACTO ═══ -->
+<section id="contacto">
+  <div class="container">
+    <div class="chip">Contacto</div>
+    <h2 class="seccion-titulo">Encuéntranos</h2>
+    <p class="seccion-subtitulo">Estamos en la Vereda El Cucubo, Santa Rosa de Viterbo, Boyacá.</p>
+
+    <div class="contacto-grid">
+      <div class="contacto-item">
+        <div class="contacto-icono">
+          <!-- Pin de mapa -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#3D5A28" stroke-width="2" stroke-linejoin="round"/>
+            <circle cx="12" cy="9" r="2.5" stroke="#3D5A28" stroke-width="2"/>
+          </svg>
+        </div>
+        <div>
+          <h4>Dirección</h4>
+          <p>Vereda El Cucubo, Predio El Recuerdo<br>Santa Rosa de Viterbo, Boyacá<br>Colombia</p>
+        </div>
+      </div>
+
+      <div class="contacto-item">
+        <div class="contacto-icono">
+          <!-- Correo -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="3" stroke="#3D5A28" stroke-width="2"/>
+            <path d="M2 8l10 6 10-6" stroke="#3D5A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h4>Correo electrónico</h4>
+          <a href="mailto:angiejuliethsilva@gmail.com">angiejuliethsilva@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contacto-item">
+        <div class="contacto-icono">
+          <!-- Teléfono -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" stroke="#3D5A28" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h4>Teléfono</h4>
+          <p><a href="tel:+573219990329">Cel: 321 999 0329</a></p>
+        </div>
+      </div>
+
+      <div class="contacto-item">
+        <div class="contacto-icono">
+          <!-- NIT / documento -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8L14 2z" stroke="#3D5A28" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M14 2v6h6" stroke="#3D5A28" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M8 13h8M8 17h5" stroke="#3D5A28" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h4>NIT</h4>
+          <p>901947337-1<br>Constituida en 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-marca">
+        <span>Ganadería El Porvenir</span>
+      </div>
+      <div class="footer-info">
+        <strong>Asociación Ganadería El Porvenir Santa Rosa</strong><br>
+        NIT 901947337-1 · Santa Rosa de Viterbo, Boyacá, Colombia<br>
+        © <span id="anio-footer"></span> Todos los derechos reservados
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── Año dinámico en footer ──
+  document.getElementById('anio-footer').textContent = new Date().getFullYear();
+
+  // ── Menú hamburguesa ──
+  const hamburger = document.getElementById('hamburger');
+  const menuMovil = document.getElementById('menu-movil');
+  hamburger.addEventListener('click', () => {
+    const abierto = menuMovil.classList.toggle('abierto');
+    hamburger.classList.toggle('abierto', abierto);
+    hamburger.setAttribute('aria-expanded', abierto);
+  });
+  document.querySelectorAll('.nav-link-movil').forEach(a => {
+    a.addEventListener('click', () => {
+      menuMovil.classList.remove('abierto');
+      hamburger.classList.remove('abierto');
+      hamburger.setAttribute('aria-expanded', false);
+    });
+  });
+
+  // ── Activar enlace de nav según sección visible ──
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const secciones = document.querySelectorAll('section[id]');
+  const observador = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => {
+          a.classList.toggle('activo', a.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  secciones.forEach(s => observador.observe(s));
+</script>
+</body>
+</html>
