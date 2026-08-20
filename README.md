@@ -5,14 +5,13 @@ Sitio estático (sin build) para `ganaderiaporvenir.com`, con la misma arquitect
 ## Estructura
 - `index.html` — toda la página (HTML + CSS + JS inline).
 - `_headers` — cabeceras de seguridad y de caché para Cloudflare Pages.
-- `documentos/` — vacía por ahora. La sección "Documentos y trazabilidad" del sitio muestra un aviso de "No disponible aún" en lo que llegan el RUT, el certificado de Cámara de Comercio, el registro ICA, etc.
-- `assets/` — vacía por ahora. No hay logo todavía: el header y el footer solo muestran el nombre en texto. Cuando tengas el logo, colócalo aquí y avísame para integrarlo.
+- `documentos/` — 4 PDF del Régimen Tributario Especial (RTE): informe anual de gestión y resultados, certificación de requisitos, acta de asamblea de autorización y certificación de antecedentes judiciales. Listados en la sección "Documentos y trazabilidad".
+- `assets/` — `logo.png` (optimizado a 300px de ancho, ~145KB). Integrado en el header y el footer.
 
 ## Pendientes antes de publicar
-1. Agregar el logo cuando lo tengas (`assets/`) y volver a mostrarlo en el header/footer.
-2. Cuando tengas los documentos oficiales (RUT, Cámara de Comercio, registro ICA, hierro/marca), colócalos en `documentos/` y pide que se vuelva a activar la lista con el visor de PDF en la sección "Documentos".
-3. Añadir fotos reales de la finca/ganado en `assets/` (opcional, mejora mucho la página).
-4. Revisar los textos de "Quiénes somos" y ajustar si algo no refleja la realidad del negocio.
+1. Añadir fotos reales de la finca/ganado en `assets/` (opcional, mejora mucho la página).
+2. Revisar los textos de "Quiénes somos" y ajustar si algo no refleja la realidad del negocio.
+3. Cuando lleguen más documentos oficiales (RUT, Cámara de Comercio, registro ICA, hierro/marca), agregarlos a `documentos/` y a la lista de la sección "Documentos".
 
 ## Publicar en Cloudflare Pages (igual que tu otro sitio)
 1. Sube esta carpeta a un repositorio de GitHub (por ejemplo `ganaderia-el-porvenir`).
